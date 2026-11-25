@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Portal Tecnológico</title>
+  <!-- Carga de Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Desplazamiento suave */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Estilos generales y fondo rosa pastel */
+    body {
+      background-color: #ffe4ec;
+      color: #4a3b42;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* ==================== PORTADA DE BIENVENIDA SEPARADA ==================== */
+    #portada-bienvenida {
+      min-height: 100vh;
+      width: 100%;
+      background: linear-gradient(145deg, #ffd6e4 0%, #fff0f5 52%, #ffb6c1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 18px;
+      position: relative;
+      overflow: hidden;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+
+    #portada-bienvenida.ocultar-portada {
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: none;
+    }
+
+    .burbuja {
+      position: absolute;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.42);
+      pointer-events: none;
+      animation: flotar 7s ease-in-out infinite;
+    }
+
+    .burbuja-1 {
+      width: 180px;
+      height: 180px;
+      top: -40px;
+      left: -40px;
+    }
+
+    .burbuja-2 {
+      width: 240px;
+      height: 240px;
+      bottom: -60px;
+      right: -50px;
+      animation-delay: 2s;
+    }
+
+    .burbuja-3 {
+      width: 110px;
+      height: 110px;
+      top: 18%;
+      right: 12%;
+      animation-delay: 4s;
+    }
+
+    @keyframes flotar {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+      }
+      50% {
+        transform: translateY(-14px) scale(1.04);
+      }
+    }
+
+    .tarjeta-portada {
+      position: relative;
+      z-index: 2;
+      max-width: 660px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(8px);
+      border: 2px solid #ffffff;
+      border-radius: 28px;
+      padding: 42px 30px;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(214, 51, 132, 0.18);
+    }
+
+    .insignia-portada {
+      display: inline-block;
+      background-color: #ffe4ec;
+      color: #d63384;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid #ffb6c1;
+      margin-bottom: 16px;
+    }
+
+    .btn-entrar-portal {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 22px;
+      background: linear-gradient(135deg, #d63384, #ff6b9d);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.08rem;
+      padding: 14px 32px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(214, 51, 132, 0.3);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+
+    .btn-entrar-portal:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 26px rgba(214, 51, 132, 0.38);
+      filter: brightness(1.04);
+    }
+
+    /* ==================== PÁGINA PRINCIPAL ==================== */
+    #pagina-principal {
+      display: none;
+      animation: fadeInDown 0.4s ease;
+    }
+
+    /* Encabezado principal */
+    header {
+      background: linear-gradient(135deg, #ffb6c1, #ff8da1);
+      color: #ffffff;
+      text-align: center;
+      padding: 42px 20px;
+      box-shadow: 0 4px 12px rgba(214, 51, 132, 0.18);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+    }
+
+    header p {
+      font-size: 1.1rem;
+      margin-top: 10px;
+      opacity: 0.96;
+    }
+
+    /* Barra de navegación fija */
+    nav {
+      background-color: #ffffff;
+      text-align: center;
+      padding: 12px 15px;
+      position: sticky;
+      top: 0;
+      box-shadow: 0 2px 10px rgba(214, 51, 132, 0.1);
+      z-index: 100;
+    }
+
+    .nav-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: #d63384;
+    }
+
+    .nav-item-btn, .dropdown-btn {
+      color: #d63384;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 7px 14px;
+      border-radius: 20px;
+      transition: background-color 0.25s, color 0.25s, transform 0.2s;
+      display: inline-block;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 0.98rem;
+      font-family: inherit;
+    }
+
+    .nav-item-btn:hover,
+    .nav-item-btn.activo,
+    .dropdown-btn:hover {
+      background-color: #ffe4ec;
+      color: #a61e61;
+      transform: translateY(-1px);
+    }
+
+    .nav-item-btn.activo {
+      box-shadow: inset 0 0 0 1.5px #ffb6c1;
+    }
+
+    /* Estilos del Menú Desplegable (Dropdown) */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 6px;
+      background-color: #ffffff;
+      min-width: 230px;
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(214, 51, 132, 0.2);
+      border: 1px solid #ffd1df;
+      padding: 8px;
+      z-index: 200;
+      text-align: left;
+    }
+
+    .dropdown::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 10px;
+      bottom: -10px;
+    }
+
+    .dropdown:hover .dropdown-content,
+    .dropdown.active .dropdown-content {
+      display: block;
+      animation: fadeInDown 0.22s ease;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dropdown-content button,
+    .dropdown-content a {
+      display: block;
+      width: 100%;
+      margin: 2px 0;
+      padding: 9px 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      text-align: left;
+      color: #d63384;
+      font-weight: 600;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.2s, color 0.2s;
+    }
+
+    .dropdown-content button:hover,
+    .dropdown-content a:hover {
+      background-color: #fff0f5;
+      color: #a61e61;
+      transform: translateX(3px);
+    }
+
+    /* Contenedor principal */
+    main {
+      max-width: 860px;
+      margin: 28px auto;
+      padding: 0 18px;
+    }
+
+    /* Barra superior para alternar entre Vista General y Vista Apartada del Taller */
+    .barra-vistas {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background-color: #fff6f9;
+      border: 1.5px solid #ffd1df;
+      border-radius: 16px;
+      padding: 12px 18px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 12px rgba(214, 51, 132, 0.06);
+    }
+
+    .btn-vista {
+      background-color: #ffffff;
+      color: #d63384;
+      border: 1.5px solid #ffb6c1;
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-vista:hover,
+    .btn-vista.activa {
+      background-color: #d63384;
+      color: #ffffff;
+      border-color: #d63384;
+    }
+
+    /* Tarjetas de secciones */
+    .tarjeta-seccion {
+      background-color: #ffffff;
+      padding: 32px;
+      border-radius: 22px;
+      box-shadow: 0 8px 22px rgba(214, 51, 132, 0.09);
+      margin-bottom: 26px;
+      border: 1px solid #ffe4ec;
+      scroll-margin-top: 78px;
+    }
+
+    .subtarjeta-rosa {
+      background-color: #fff6f9;
+      padding: 24px;
+      border-radius: 16px;
+      margin: 22px 0;
+      border: 1px solid #ffd1df;
+      scroll-margin-top: 78px;
+    }
+
+    /* Vista exclusiva y separada de "Sobre el Taller de Informática" */
+    #vista-taller-aparte {
+      display: none;
+      background-color: #ffffff;
+      padding: 34px;
+      border-radius: 22px;
+      box-shadow: 0 10px 25px rgba(214, 51, 132, 0.12);
+      border: 2px solid #ffb6c1;
+      margin-bottom: 26px;
+      animation: fadeInDown 0.3s ease;
+    }
+
+    .cuadricula-taller {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .ficha-taller {
+      background-color: #fff6f9;
+      border: 1px solid #ffd1df;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .ficha-taller h4 {
+      color: #d63384;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      font-size: 1.05rem;
+    }
+
+    /* Títulos */
+    h2 {
+      color: #d63384;
+      font-size: 1.65rem;
+      font-weight: 700;
+      border-bottom: 2px solid #ffb6c1;
+      padding-bottom: 8px;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      color: #b82b70;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 20px;
+      margin-bottom: 12px;
+    }
+
+    /* Listas */
+    ul {
+      list-style-type: disc;
+      padding-left: 25px;
+      margin-bottom: 16px;
+    }
+
+    ol {
+      list-style-type: decimal;
+      padding-left: 25px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    li::marker {
+      color: #d63384;
+      font-weight: bold;
+    }
+
+    /* Imagen responsiva */
+    .hardware-img {
+      display: block;
+      width: 100%;
+      max-width: 460px;
+      height: auto;
+      margin: 20px auto;
+      border-radius: 16px;
+      border: 4px solid #ffb6c1;
+      box-shadow: 0 6px 16px rgba(214, 51, 132, 0.16);
+      transition: transform 0.3s ease;
+    }
+
+    .hardware-img:hover {
+      transform: scale(1.02);
+    }
+
+    /* Contenedor de video */
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 660px;
+      margin: 20px auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 4px solid #ffb6c1;
+      box-shadow: 0 6px 18px rgba(214, 51, 132, 0.18);
+      background-color: #2b2126;
+    }
+
+    .video-container video {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 380px;
+    }
+
+    /* Estilos de la Encuesta */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 700;
+      color: #b82b70;
+      margin-bottom: 8px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid #ffc2d4;
+      border-radius: 12px;
+      background-color: #ffffff;
+      color: #4a3b42;
+      font-family: inherit;
+      font-size: 0.98rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: #d63384;
+      box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.15);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+      gap: 10px;
+    }
+
+    .option-card {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #ffffff;
+      border: 1.5px solid #ffd1df;
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .option-card:hover {
+      background-color: #ffe4ec;
+      border-color: #ff8da1;
+    }
+
+    .option-card input[type="radio"],
+    .option-card input[type="checkbox"] {
+      accent-color: #d63384;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      background-color: #d63384;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 1.05rem;
+      padding: 13px 28px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(214, 51, 132, 0.25);
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+      width: 100%;
+    }
+
+    .btn-submit:hover {
+      background-color: #b0236a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(214, 51, 132, 0.32);
+    }
+
+    .mensaje-confirmacion {
+      display: none;
+      margin-top: 20px;
+      padding: 18px 20px;
+      background-color: #ffffff;
+      border: 2px solid #ff8da1;
+      border-left: 6px solid #d63384;
+      border-radius: 14px;
+      color: #4a3b42;
+      box-shadow: 0 6px 15px rgba(214, 51, 132, 0.12);
+      animation: fadeInDown 0.35s ease;
+    }
+
+    .mensaje-confirmacion h4 {
+      color: #d63384;
+      margin: 0 0 6px 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    /* Enlaces externos */
+    main a {
+      color: #d63384;
+      font-weight: bold;
+      text-decoration: none;
+      border-bottom: 1px dashed #d63384;
+      transition: color 0.2s, border-bottom-color 0.2s;
+    }
+
+    main a:hover {
+      color: #9e1b5c;
+      border-bottom: 1px solid #9e1b5c;
+    }
+
+    /* Pie de página */
+    footer {
+      background-color: #ffb6c1;
+      color: #4a3b42;
+      text-align: center;
+      padding: 22px 16px;
+      margin-top: 40px;
+      font-size: 0.98rem;
+      box-shadow: 0 -3px 10px rgba(214, 51, 132, 0.12);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PORTADA DE BIENVENIDA SEPARADA ==================== -->
+  <section id="portada-bienvenida" aria-label="Portada de Bienvenida">
+    <div class="burbuja burbuja-1"></div>
+    <div class="burbuja burbuja-2"></div>
+    <div class="burbuja burbuja-3"></div>
+
+    <div class="tarjeta-portada">
+      <span class="insignia-portada">🌸 Bienvenida • Proyecto Escolar</span>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-[#d63384] mb-3">
+        Mi Portal Tecnológico
+      </h1>
+      <p class="text-base sm:text-lg text-[#5c4852] mb-2">
+        Un espacio web diseñado en tonos rosa pastel para reflexionar sobre el uso del celular, aprender desarrollo web y explorar nuestro taller escolar.
+      </p>
+      <p class="text-sm font-semibold text-[#b82b70] mt-3">
+        Elaborado por: Guadalupe Temich Fernandez • Escuela Secundaria Técnica
+      </p>
+
+      <button type="button" id="btnEntrarPrincipal" class="btn-entrar-portal">
+        <span>Entrar a la Página Principal</span>
+        <span aria-hidden="true">✨</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ==================== PÁGINA PRINCIPAL ==================== -->
+  <div id="pagina-principal">
+    <!-- Encabezado principal -->
+    <header>
+      <h1>Bienvenido a mi sitio de informática</h1>
+      <p>Reflexión digital, desarrollo web y aprendizaje en la Secundaria Técnica.</p>
+    </header>
+
+    <!-- Barra de navegación fija con menú desplegable -->
+    <nav aria-label="Navegación principal">
+      <div class="nav-container">
+        <strong>Navegación:</strong>
+        <button type="button" class="nav-item-btn activo" data-destino="introduccion">Introducción</button>
+        <span class="hidden sm:inline">|</span>
+        <button type="button" class="nav-item-btn" data-destino="temas">Temas</button>
+        <span class="hidden sm:inline">|</span>
+        <button type="button" class="nav-item-btn" data-destino="multimedia">Multimedia</button>
+        <span class="hidden sm:inline">|</span>
+        <button type="button" class="nav-item-btn" data-destino="encuesta">Encuesta</button>
+        <span class="hidden sm:inline">|</span>
+        <button type="button" class="nav-item-btn" data-destino="taller-aparte">Sobre el Taller</button>
+        <span class="hidden sm:inline">|</span>
+
+        <!-- Menú Desplegable (Dropdown) -->
+        <div class="dropdown" id="dropdownMenu">
+          <button type="button" class="dropdown-btn" id="dropdownToggle" aria-expanded="false" aria-haspopup="true">
+            Más Secciones ▾
+          </button>
+          <div class="dropdown-content" role="menu">
+            <button type="button" data-destino="taller-aparte" role="menuitem">🏫 Sobre el Taller de Informática (Aparte)</button>
+            <button type="button" data-destino="pasos" role="menuitem">📋 Pasos de Creación</button>
+            <button type="button" data-destino="encuesta" role="menuitem">📱 Encuesta del Celular</button>
+            <a href="https://es.wikipedia.org" target="_blank" rel="noopener noreferrer" role="menuitem">🌐 Wikipedia en Español</a>
+            <button type="button" id="btnVolverPortada" role="menuitem">🎀 Volver a la Portada</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main>
+      <!-- Selector rápido para alternar entre Vista Principal y Vista Apartada de Sobre el Taller -->
+      <div class="barra-vistas">
+        <span class="text-sm font-semibold text-[#b82b70]">
+          Vista actual: <strong id="etiquetaVistaActual">Portal Principal (Introducción, Temas, Multimedia y Encuesta)</strong>
+        </span>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" id="btnVistaGeneral" class="btn-vista activa">
+            Secciones del Portal
+          </button>
+          <button type="button" id="btnVistaTaller" class="btn-vista">
+            Sobre el Taller de Informática (Aparte)
+          </button>
+        </div>
+      </div>
+
+      <!-- ==================== VISTA APARTADA: SOBRE EL TALLER DE INFORMÁTICA ==================== -->
+      <section id="vista-taller-aparte" aria-label="Sobre el Taller de Informática">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <h2 class="mb-0">Sobre el Taller de Informática</h2>
+          <button type="button" id="btnRegresarDesdeTaller" class="btn-vista">
+            ← Volver a las demás secciones
+          </button>
+        </div>
+        <p class="mt-3">
+          En este laboratorio aprendemos a utilizar herramientas digitales, hardware, algoritmos y desarrollo web para solucionar problemas técnicos de manera creativa y responsable.
+        </p>
+
+        <div class="cuadricula-taller">
+          <div class="ficha-taller">
+            <h4>💻 Herramientas y Software</h4>
+            <p class="text-sm m-0">Editores de código, navegadores web, hojas de cálculo y recursos digitales educativos.</p>
+          </div>
+          <div class="ficha-taller">
+            <h4>🔧 Hardware y Lógica</h4>
+            <p class="text-sm m-0">Identificación de componentes internos, resolución de fallas básicas y pensamiento algorítmico.</p>
+          </div>
+          <div class="ficha-taller">
+            <h4>🌸 Diseño Web Responsivo</h4>
+            <p class="text-sm m-0">Estructuración con HTML5, estilos visuales con CSS3 y adaptación a celulares y computadoras.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== CONTENIDO PRINCIPAL DE LA PÁGINA ==================== -->
+      <div id="contenido-general">
+        <!-- Sección de Introducción sobre el Uso No Regulado del Celular -->
+        <section id="introduccion" class="tarjeta-seccion">
+          <h2>Introducción: El Uso No Regulado del Celular</h2>
+          <p>
+            Hoy en día el teléfono celular es una herramienta muy útil para comunicarnos, investigar y aprender, pero cuando se utiliza sin límites ni horarios puede volverse un distractor constante en la vida diaria de los estudiantes.
+          </p>
+          <p class="mt-3">
+            El uso no regulado del celular suele manifestarse al revisar notificaciones durante las clases, prolongar el tiempo en redes sociales o juegos hasta altas horas de la noche y postergar las tareas escolares. Reconocer estos hábitos nos ayuda a construir un equilibrio sano entre la tecnología, el descanso, el estudio y la convivencia.
+          </p>
+
+          <!-- Temas y Pasos -->
+          <section id="temas" class="subtarjeta-rosa">
+            <h3>Temas del Primer Trimestre:</h3>
+            <ul>
+              <li>Introducción a la Web y HTML5</li>
+              <li>Diseño de Estilos con CSS3</li>
+              <li>Alineación y Layouts con Flexbox</li>
+              <li>Publicación de Proyectos Web</li>
+            </ul>
+
+            <h3 id="pasos">Pasos para crear esta página:</h3>
+            <ol>
+              <li>Crear la carpeta del proyecto.</li>
+              <li>Escribir la estructura HTML en el editor.</li>
+              <li>Guardar el archivo como index.html.</li>
+              <li>Abrir el archivo en el navegador para verificar.</li>
+            </ol>
+          </section>
+
+          <!-- Sección Multimedia: Imagen y Video -->
+          <section id="multimedia" class="subtarjeta-rosa">
+            <h3>Imagen Representativa:</h3>
+            <!-- Para usar tu imagen local en tu computadora, cambia el atributo src por: src="img/hardware.jpg" -->
+            <img 
+              src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" 
+              onerror="this.onerror=null; this.src='https://placehold.co/800x450/ffe4ec/d63384?text=Hardware+de+Computadora';" 
+              alt="Componentes internos y circuitos de hardware de una computadora" 
+              class="hardware-img"
+            >
+
+            <h3>Video: La vida antes de los celulares</h3>
+            <p>Observa cómo la tecnología ha transformado nuestra comunicación diaria y cómo realizábamos nuestras actividades antes de contar con teléfonos inteligentes.</p>
+            
+            <!-- Reproductor de video funcional con controles y borde rosa pastel -->
+            <div class="video-container">
+              <video controls preload="metadata" poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                Tu navegador no soporta la reproducción de video HTML5.
+              </video>
+            </div>
+          </section>
+
+          <!-- Sección de Encuesta sobre el Uso del Celular -->
+          <section id="encuesta" class="subtarjeta-rosa">
+            <h2>Encuesta: Uso del Celular en Estudiantes</h2>
+            <p class="mb-4">Responde esta encuesta breve para reflexionar sobre cómo usamos el celular en nuestra rutina diaria.</p>
+
+            <form id="formEncuesta">
+              <!-- Nombre -->
+              <div class="form-group">
+                <label for="nombreVisitante" class="form-label">1. Tu nombre (visitante o compañero):</label>
+                <input 
+                  type="text" 
+                  id="nombreVisitante" 
+                  name="nombre" 
+                  class="form-input" 
+                  placeholder="Escribe tu nombre aquí..." 
+                  required
+                >
+              </div>
+
+              <!-- Horas de uso no regulado -->
+              <div class="form-group">
+                <span class="form-label">2. ¿Cuántas horas al día pasas en el celular fuera de tus tareas escolares?</span>
+                <div class="options-grid">
+                  <label class="option-card">
+                    <input type="radio" name="horasUso" value="Menos de 1 hora" required>
+                    <span>Menos de 1 hora</span>
+                  </label>
+                  <label class="option-card">
+                    <input type="radio" name="horasUso" value="1 a 2 horas">
+                    <span>1 a 2 horas</span>
+                  </label>
+                  <label class="option-card">
+                    <input type="radio" name="horasUso" value="3 a 4 horas">
+                    <span>3 a 4 horas</span>
+                  </label>
+                  <label class="option-card">
+                    <input type="radio" name="horasUso" value="Más de 4 horas">
+                    <span>Más de 4 horas</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Momento de mayor distracción -->
+              <div class="form-group">
+                <label for="momentoDistraccion" class="form-label">3. ¿En qué momento sientes que pierdes más el control del tiempo con el celular?</label>
+                <select id="momentoDistraccion" name="momento" class="form-select" required>
+                  <option value="" disabled selected>Selecciona una opción...</option>
+                  <option value="Antes de dormir">Antes de dormir (desvelo)</option>
+                  <option value="Al hacer tarea">Al hacer tarea o estudiar</option>
+                  <option value="En tiempos libres">En tiempos libres o descansos</option>
+                  <option value="Casi no pierdo el control">Casi no pierdo el control</option>
+                </select>
+              </div>
+
+              <!-- Efectos percibidos -->
+              <div class="form-group">
+                <span class="form-label">4. ¿Qué efectos has notado cuando usas el celular en exceso?</span>
+                <div class="options-grid">
+                  <label class="option-card">
+                    <input type="checkbox" name="efectos" value="Falta de concentración">
+                    <span>Falta de concentración</span>
+                  </label>
+                  <label class="option-card">
+                    <input type="checkbox" name="efectos" value="Cansancio o desvelo">
+                    <span>Cansancio o desvelo</span>
+                  </label>
+                  <label class="option-card">
+                    <input type="checkbox" name="efectos" value="Tareas atrasadas">
+                    <span>Tareas atrasadas</span>
+                  </label>
+                  <label class="option-card">
+                    <input type="checkbox" name="efectos" value="Vista cansada">
+                    <span>Vista cansada</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Reflexión o propuesta -->
+              <div class="form-group">
+                <label for="comentarios" class="form-label">5. ¿Qué medida propones para regular mejor el uso del celular?</label>
+                <textarea 
+                  id="comentarios" 
+                  name="comentarios" 
+                  rows="3" 
+                  class="form-textarea" 
+                  placeholder="Ejemplo: apagar notificaciones al hacer tarea o dejar el celular fuera de la cama..."
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn-submit">Enviar Encuesta 💌</button>
+            </form>
+
+            <!-- Mensaje visual de confirmación -->
+            <div id="mensajeConfirmacion" class="mensaje-confirmacion" role="status" aria-live="polite">
+              <h4>¡Gracias por participar en la encuesta! 🌸</h4>
+              <p id="textoConfirmacion"></p>
+            </div>
+          </section>
+
+          <p>Para conocer más sobre la evolución de la tecnología, puedes consultar la 
+            <a href="https://es.wikipedia.org" target="_blank" rel="noopener noreferrer">Wikipedia en Español</a>.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+      <p>Elaborado por: <strong>Guadalupe Temich Fernandez</strong> | Escuela Secundaria Técnica</p>
+    </footer>
+  </div>
+
+  <!-- Script para portada separada, vista apartada del taller, menú desplegable y encuesta -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const portada = document.getElementById('portada-bienvenida');
+      const paginaPrincipal = document.getElementById('pagina-principal');
+      const btnEntrarPrincipal = document.getElementById('btnEntrarPrincipal');
+      const btnVolverPortada = document.getElementById('btnVolverPortada');
+
+      const contenidoGeneral = document.getElementById('contenido-general');
+      const vistaTallerAparte = document.getElementById('vista-taller-aparte');
+      const btnVistaGeneral = document.getElementById('btnVistaGeneral');
+      const btnVistaTaller = document.getElementById('btnVistaTaller');
+      const btnRegresarDesdeTaller = document.getElementById('btnRegresarDesdeTaller');
+      const etiquetaVistaActual = document.getElementById('etiquetaVistaActual');
+
+      const dropdown = document.getElementById('dropdownMenu');
+      const dropdownToggle = document.getElementById('dropdownToggle');
+
+      // Función para mostrar la vista apartada "Sobre el Taller de Informática"
+      function mostrarVistaTaller() {
+        contenidoGeneral.style.display = 'none';
+        vistaTallerAparte.style.display = 'block';
+        btnVistaTaller.classList.add('activa');
+        btnVistaGeneral.classList.remove('activa');
+        etiquetaVistaActual.textContent = 'Sobre el Taller de Informática (Vista Apartada)';
+
+        document.querySelectorAll('.nav-item-btn').forEach(btn => {
+          btn.classList.toggle('activo', btn.dataset.destino === 'taller-aparte');
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Función para mostrar las secciones principales del portal y desplazarse a una sección específica
+      function mostrarVistaGeneral(seccionId = null) {
+        vistaTallerAparte.style.display = 'none';
+        contenidoGeneral.style.display = 'block';
+        btnVistaGeneral.classList.add('activa');
+        btnVistaTaller.classList.remove('activa');
+        etiquetaVistaActual.textContent = 'Portal Principal (Introducción, Temas, Multimedia y Encuesta)';
+
+        document.querySelectorAll('.nav-item-btn').forEach(btn => {
+          const destino = btn.dataset.destino;
+          if (seccionId) {
+            btn.classList.toggle('activo', destino === seccionId);
+          } else {
+            btn.classList.toggle('activo', destino === 'introduccion');
+          }
+        });
+
+        if (seccionId) {
+          const elemento = document.getElementById(seccionId);
+          if (elemento) {
+            elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }
+
+      // Entrar desde la portada separada hacia la página principal
+      btnEntrarPrincipal.addEventListener('click', () => {
+        portada.classList.add('ocultar-portada');
+        setTimeout(() => {
+          portada.style.display = 'none';
+          paginaPrincipal.style.display = 'block';
+          mostrarVistaGeneral();
+          window.scrollTo({ top: 0, behavior: 'instant' });
+        }, 320);
+      });
+
+      // Volver a la portada separada
+      btnVolverPortada.addEventListener('click', () => {
+        dropdown.classList.remove('active');
+        dropdownToggle.setAttribute('aria-expanded', 'false');
+        paginaPrincipal.style.display = 'none';
+        portada.style.display = 'flex';
+        requestAnimationFrame(() => {
+          portada.classList.remove('ocultar-portada');
+        });
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+
+      // Botones del selector de vistas
+      btnVistaGeneral.addEventListener('click', () => mostrarVistaGeneral('introduccion'));
+      btnVistaTaller.addEventListener('click', mostrarVistaTaller);
+      btnRegresarDesdeTaller.addEventListener('click', () => mostrarVistaGeneral('introduccion'));
+
+      // Navegación desde botones de la barra y menú desplegable
+      document.querySelectorAll('[data-destino]').forEach(control => {
+        control.addEventListener('click', () => {
+          const destino = control.dataset.destino;
+          dropdown.classList.remove('active');
+          dropdownToggle.setAttribute('aria-expanded', 'false');
+
+          if (destino === 'taller-aparte') {
+            mostrarVistaTaller();
+          } else {
+            mostrarVistaGeneral(destino);
+          }
+        });
+      });
+
+      // Menú desplegable táctil / clic
+      dropdownToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isActive = dropdown.classList.toggle('active');
+        dropdownToggle.setAttribute('aria-expanded', isActive);
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('active');
+          dropdownToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Manejo del formulario de encuesta sobre el uso del celular
+      const formEncuesta = document.getElementById('formEncuesta');
+      const mensajeConfirmacion = document.getElementById('mensajeConfirmacion');
+      const textoConfirmacion = document.getElementById('textoConfirmacion');
+
+      formEncuesta.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const nombre = document.getElementById('nombreVisitante').value.trim();
+        const horasSeleccionadas = document.querySelector('input[name="horasUso"]:checked');
+        const momento = document.getElementById('momentoDistraccion').value;
+        const propuesta = document.getElementById('comentarios').value.trim();
+
+        const efectosChecked = Array.from(
+          document.querySelectorAll('input[name="efectos"]:checked')
+        ).map(cb => cb.value);
+
+        const horasTexto = horasSeleccionadas ? horasSeleccionadas.value : 'No especificado';
+        const efectosTexto = efectosChecked.length > 0
+          ? efectosChecked.join(', ')
+          : 'Ninguno seleccionado';
+        const propuestaTexto = propuesta ? propuesta : 'Sin comentario adicional';
+
+        let consejo = '¡Excelente hábito! Mantener horarios claros favorece tu descanso y concentración.';
+        if (horasTexto === '3 a 4 horas' || horasTexto === 'Más de 4 horas') {
+          consejo = 'Sugerencia: intenta activar descansos sin pantalla durante tus horas de estudio y antes de dormir.';
+        } else if (horasTexto === '1 a 2 horas') {
+          consejo = 'Buen seguimiento: cuidar los momentos clave como la tarea y el sueño ayuda a mantener el equilibrio.';
+        }
+
+        textoConfirmacion.innerHTML = `
+          ¡Gracias por responder, <strong>${nombre}</strong>! Aquí tienes el resumen de tu encuesta:<br>
+          • <strong>Tiempo diario fuera de tareas:</strong> ${horasTexto}<br>
+          • <strong>Momento de mayor distracción:</strong> ${momento}<br>
+          • <strong>Efectos percibidos:</strong> ${efectosTexto}<br>
+          • <strong>Propuesta de regulación:</strong> ${propuestaTexto}<br>
+          <span class="block mt-2 font-semibold text-[#b82b70]">💡 ${consejo}</span>
+        `;
+
+        mensajeConfirmacion.style.display = 'block';
+        mensajeConfirmacion.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        formEncuesta.reset();
+      });
+    });
+  </script>
+
+</body>
+</html>

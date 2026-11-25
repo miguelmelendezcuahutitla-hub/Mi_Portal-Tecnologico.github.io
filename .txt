@@ -1,0 +1,646 @@
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Portal Tecnológico</title>
+  <!-- Carga de Tailwind CSS (requerido por el entorno) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Desplazamiento suave al hacer clic en los enlaces del menú */
+    html {
+      scroll-behavior: smooth;
+    }<!DOCTYPE html>
+
+    /* Estilos generales y fondo rosa pastel */
+    body {
+      background-color: #ffe4ec; /* Rosa pastel suave */
+      color: #4a3b42; /* Gris oscuro con un toque cálido para leer cómodo */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    /* Encabezado principal */
+    header {
+      background: linear-gradient(135deg, #ffb6c1, #ff8da1);
+      color: #ffffff;
+      text-align: center;
+      padding: 45px 20px;
+      box-shadow: 0 4px 12px rgba(214, 51, 132, 0.18);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+    }
+
+    header p {
+      font-size: 1.1rem;
+      margin-top: 10px;
+      opacity: 0.95;
+    }
+
+    /* Barra de navegación fija */
+    nav {
+      background-color: #ffffff;
+      text-align: center;
+      padding: 12px 15px;
+      position: sticky;
+      top: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      z-index: 100;
+    }
+
+    .nav-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      color: #d63384;
+    }
+
+    nav a, .dropdown-btn {
+      color: #d63384;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 7px 15px;
+      border-radius: 20px;
+      transition: background-color 0.3s, color 0.3s, transform 0.2s;
+      display: inline-block;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    nav a:hover, .dropdown-btn:hover {
+      background-color: #ffe4ec;
+      color: #a61e61;
+      transform: translateY(-1px);
+    }
+
+    /* Estilos del Menú Desplegable (Dropdown) */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 6px;
+      background-color: #ffffff;
+      min-width: 200px;
+      border-radius: 16px;
+      box-shadow: 0 8px 22px rgba(214, 51, 132, 0.18);
+      border: 1px solid #ffd1df;
+      padding: 8px;
+      z-index: 200;
+      text-align: left;
+    }
+
+    /* Puente invisible para evitar que se cierre al mover el mouse al submenú */
+    .dropdown::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 10px;
+      bottom: -10px;
+    }
+
+    .dropdown:hover .dropdown-content,
+    .dropdown.active .dropdown-content {
+      display: block;
+      animation: fadeInDown 0.25s ease;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dropdown-content a {
+      display: block;
+      width: 100%;
+      margin: 2px 0;
+      padding: 9px 14px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #fff0f5;
+      transform: translateX(3px);
+    }
+
+    /* Contenedor principal (Tarjetas) */
+    main {
+      max-width: 850px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+
+    section#sobre-taller {
+      background-color: #ffffff;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(214, 51, 132, 0.08);
+      scroll-margin-top: 75px;
+    }
+
+    section#temas {
+      background-color: #fff6f9;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 1px solid #ffd1df;
+      scroll-margin-top: 75px;
+    }
+
+    section#multimedia {
+      background-color: #fff6f9;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 1px solid #ffd1df;
+      scroll-margin-top: 75px;
+    }
+
+    section#encuesta {
+      background-color: #fff6f9;
+      padding: 28px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border: 1px solid #ffd1df;
+      scroll-margin-top: 75px;
+    }
+
+    /* Estilos del Formulario de Encuesta */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 700;
+      color: #b82b70;
+      margin-bottom: 8px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid #ffc2d4;
+      border-radius: 12px;
+      background-color: #ffffff;
+      color: #4a3b42;
+      font-family: inherit;
+      font-size: 0.98rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      box-sizing: border-box;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: #d63384;
+      box-shadow: 0 0 0 3px rgba(214, 51, 132, 0.15);
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 10px;
+    }
+
+    .option-card {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background-color: #ffffff;
+      border: 1.5px solid #ffd1df;
+      padding: 9px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .option-card:hover {
+      background-color: #ffe4ec;
+      border-color: #ff8da1;
+    }
+
+    .option-card input[type="radio"],
+    .option-card input[type="checkbox"] {
+      accent-color: #d63384;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      background-color: #d63384;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 1.05rem;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(214, 51, 132, 0.25);
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+      width: 100%;
+    }
+
+    .btn-submit:hover {
+      background-color: #b0236a;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(214, 51, 132, 0.32);
+    }
+
+    /* Mensaje visual de confirmación de la encuesta */
+    .mensaje-confirmacion {
+      display: none;
+      margin-top: 20px;
+      padding: 18px 20px;
+      background-color: #ffffff;
+      border: 2px solid #ff8da1;
+      border-left: 6px solid #d63384;
+      border-radius: 14px;
+      color: #4a3b42;
+      box-shadow: 0 6px 15px rgba(214, 51, 132, 0.12);
+      animation: fadeInDown 0.35s ease;
+    }
+
+    .mensaje-confirmacion h4 {
+      color: #d63384;
+      margin: 0 0 6px 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    #pasos {
+      scroll-margin-top: 85px;
+    }
+
+    /* Títulos dentro del contenido */
+    h2 {
+      color: #d63384;
+      font-size: 1.65rem;
+      font-weight: 700;
+      border-bottom: 2px solid #ffb6c1;
+      padding-bottom: 8px;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      color: #b82b70;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 22px;
+      margin-bottom: 12px;
+    }
+
+    /* Listas */
+    ul {
+      list-style-type: disc;
+      padding-left: 25px;
+      margin-bottom: 16px;
+    }
+
+    ol {
+      list-style-type: decimal;
+      padding-left: 25px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    li::marker {
+      color: #d63384;
+      font-weight: bold;
+    }
+
+    /* Imagen responsiva y estilizada */
+    .hardware-img {
+      display: block;
+      width: 100%;
+      max-width: 450px;
+      height: auto;
+      margin: 20px auto;
+      border-radius: 15px;
+      border: 4px solid #ffb6c1;
+      box-shadow: 0 6px 15px rgba(214, 51, 132, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .hardware-img:hover {
+      transform: scale(1.02);
+    }
+
+    /* Contenedor responsivo y estilizado para el video */
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 650px;
+      margin: 20px auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 4px solid #ffb6c1;
+      box-shadow: 0 6px 18px rgba(214, 51, 132, 0.18);
+      background-color: #2b2126;
+    }
+
+    .video-container video {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 380px;
+    }
+
+    /* Enlace a Wikipedia */
+    main a {
+      color: #d63384;
+      font-weight: bold;
+      text-decoration: none;
+      border-bottom: 1px dashed #d63384;
+      transition: color 0.2s, border-bottom-color 0.2s;
+    }
+
+    main a:hover {
+      color: #9e1b5c;
+      border-bottom: 1px solid #9e1b5c;
+    }
+
+    /* Pie de página */
+    footer {
+      background-color: #ffb6c1;
+      color: #4a3b42;
+      text-align: center;
+  <!-- Barra de navegación fija con menú desplegable -->
+  <nav>
+    <div class="nav-container">
+      <strong>Navegación:</strong>
+      <a href="#sobre-taller">Sobre el Taller</a>
+      <span class="hidden sm:inline">|</span>
+      <a href="#temas">Temas</a>
+      <span class="hidden sm:inline">|</span>
+      <a href="#multimedia">Multimedia</a>
+      <span class="hidden sm:inline">|</span>
+
+      <!-- Menú Desplegable (Dropdown) -->
+      <div class="dropdown" id="dropdownMenu">
+        <button type="button" class="dropdown-btn" id="dropdownToggle" aria-expanded="false" aria-haspopup="true">
+          Más Secciones ▾
+        </button>
+        <div class="dropdown-content" role="menu">
+          <a href="#encuesta" role="menuitem">📝 Encuesta del Taller</a>
+          <a href="#pasos" role="menuitem">📋 Pasos de Creación</a>
+          <a href="https://es.wikipedia.org" target="_blank" rel="noopener noreferrer" role="menuitem">🌐 Wikipedia en Español</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main>
+    <section id="sobre-taller">
+      <h2>Sobre el Taller de Informática</h2>
+      <p>En este laboratorio aprendemos a utilizar herramientas digitales, hardware, algoritmos y desarrollo web para solucionar problemas técnicos.</p>
+
+      <section id="temas"> 
+        <h3>Temas del Primer Trimestre:</h3>
+        <ul>
+          <li>Introducción a la Web y HTML5</li>
+          <li>Diseño de Estilos con CSS3</li>
+          <li>Alineación y Layouts con Flexbox</li>
+          <li>Publicación de Proyectos Web</li>
+        </ul>
+
+        <h3 id="pasos">Pasos para crear esta página:</h3>
+        <ol>
+          <li>Crear la carpeta del proyecto.</li>
+          <li>Escribir la estructura HTML en el editor.</li>
+          <li>Guardar el archivo como index.html.</li>
+          <li>Abrir el archivo en el navegador para verificar.</li>
+        </ol>
+      </section>
+
+      <!-- Sección Multimedia: Imagen y Video -->
+      <section id="multimedia">
+        <h3>Imagen Representativa:</h3>
+        <!-- Para usar tu imagen local en tu computadora, cambia el atributo src por: src="img/hardware.jpg" -->
+        <img 
+          src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" 
+          onerror="this.onerror=null; this.src='https://placehold.co/800x450/ffe4ec/d63384?text=Hardware+de+Computadora';" 
+          alt="Componentes internos y circuitos de hardware de una computadora" 
+          class="hardware-img"
+        >
+
+        <h3>Video: La vida antes de los celulares</h3>
+        <p>Observa cómo la tecnología ha transformado nuestra comunicación diaria y cómo realizábamos nuestras actividades antes de contar con teléfonos inteligentes.</p>
+        
+        <!-- Reproductor de video funcional con controles y borde rosa pastel -->
+        <!-- Para usar un video local en tu proyecto, guarda el archivo en una carpeta "video/" y usa src="video/tecnologia.mp4" -->
+        <div class="video-container">
+          <video controls preload="metadata" poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80">
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video HTML5.
+          </video>
+        </div>
+      </section>
+
+      <!-- Sección de Encuesta del Taller -->
+      <section id="encuesta">
+        <h2>Encuesta del Taller</h2>
+        <p class="mb-4">¡Tu opinión es muy importante! Responde esta breve encuesta sobre nuestro proyecto de informática.</p>
+
+        <form id="formEncuesta">
+          <!-- Campo de texto para el nombre -->
+          <div class="form-group">
+            <label for="nombreVisitante" class="form-label">1. Tu nombre (visitante o compañero):</label>
+            <input 
+              type="text" 
+              id="nombreVisitante" 
+              name="nombre" 
+              class="form-input" 
+              placeholder="Escribe tu nombre aquí..." 
+              required
+            >
+          </div>
+
+          <!-- Pregunta de opción múltiple (radio buttons) -->
+          <div class="form-group">
+            <span class="form-label">2. ¿Qué tema del taller te interesa más?</span>
+            <div class="options-grid">
+              <label class="option-card">
+                <input type="radio" name="temaInteres" value="HTML5" required>
+                <span>HTML5</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="temaInteres" value="CSS3">
+                <span>CSS3</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="temaInteres" value="Flexbox">
+                <span>Flexbox</span>
+              </label>
+              <label class="option-card">
+                <input type="radio" name="temaInteres" value="Hardware">
+                <span>Hardware</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Pregunta con menú desplegable (select) -->
+          <div class="form-group">
+            <label for="calificacionPortal" class="form-label">3. ¿Cómo calificas el diseño de este portal?</label>
+            <select id="calificacionPortal" name="calificacion" class="form-select" required>
+              <option value="" disabled selected>Selecciona una opción...</option>
+              <option value="Excelente">Excelente ✨</option>
+              <option value="Muy bonito">Muy bonito 🌸</option>
+              <option value="Bueno">Bueno 👍</option>
+            </select>
+          </div>
+
+          <!-- Casillas de verificación (checkboxes) -->
+          <div class="form-group">
+            <span class="form-label">4. ¿Qué dispositivos usas para navegar?</span>
+            <div class="options-grid">
+              <label class="option-card">
+                <input type="checkbox" name="dispositivos" value="Celular">
+                <span>Celular</span>
+              </label>
+              <label class="option-card">
+                <input type="checkbox" name="dispositivos" value="Computadora">
+                <span>Computadora</span>
+              </label>
+              <label class="option-card">
+                <input type="checkbox" name="dispositivos" value="Tablet">
+                <span>Tablet</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Área de texto para comentarios -->
+          <div class="form-group">
+            <label for="comentarios" class="form-label">5. Comentarios o sugerencias:</label>
+            <textarea 
+              id="comentarios" 
+              name="comentarios" 
+              rows="3" 
+              class="form-textarea" 
+              placeholder="Escribe algún comentario sobre la página..."
+            ></textarea>
+          </div>
+
+          <!-- Botón de envío -->
+          <button type="submit" class="btn-submit">Enviar Encuesta 💌</button>
+        </form>
+
+        <!-- Mensaje visual de confirmación (se muestra sin recargar la página) -->
+        <div id="mensajeConfirmacion" class="mensaje-confirmacion" role="status" aria-live="polite">
+          <h4>¡Gracias por responder la encuesta! 🌸</h4>
+          <p id="textoConfirmacion"></p>
+        </div>
+      </section>
+
+      <p>Para conocer más sobre la evolución de la tecnología, puedes consultar la 
+        <a href="https://es.wikipedia.org" target="_blank" rel="noopener noreferrer">Wikipedia en Español</a>.
+      </p>
+    </section>
+  </main>
+
+  <!-- Pie de página -->
+  <footer>
+    <p>Elaborado por: <strong>Guadalupe Temich Fernandez</strong> | Escuela Secundaria Técnica</p>
+  </footer>
+
+  <!-- Script para el menú desplegable táctil/clic y el envío de la encuesta -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Control de clic para el menú desplegable (útil en celulares y tablets)
+      const dropdown = document.getElementById('dropdownMenu');
+      const dropdownToggle = document.getElementById('dropdownToggle');
+
+      dropdownToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isActive = dropdown.classList.toggle('active');
+        dropdownToggle.setAttribute('aria-expanded', isActive);
+      });
+
+      // Cerrar el menú desplegable si se hace clic fuera de él o en uno de sus enlaces
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+          dropdown.classList.remove('active');
+          dropdownToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      dropdown.querySelectorAll('.dropdown-content a').forEach((enlace) => {
+        enlace.addEventListener('click', () => {
+          dropdown.classList.remove('active');
+          dropdownToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      // 2. Manejo del formulario de encuesta sin recargar la página
+      const formEncuesta = document.getElementById('formEncuesta');
+      const mensajeConfirmacion = document.getElementById('mensajeConfirmacion');
+      const textoConfirmacion = document.getElementById('textoConfirmacion');
+
+      formEncuesta.addEventListener('submit', (e) => {
+        e.preventDefault(); // Evita que la página se recargue
+
+        // Obtener los valores ingresados por el usuario
+        const nombre = document.getElementById('nombreVisitante').value.trim();
+        const temaSeleccionado = document.querySelector('input[name="temaInteres"]:checked');
+        const calificacion = document.getElementById('calificacionPortal').value;
+        
+        const dispositivosChecked = Array.from(
+          document.querySelectorAll('input[name="dispositivos"]:checked')
+        ).map(cb => cb.value);
+
+        const temaTexto = temaSeleccionado ? temaSeleccionado.value : 'No especificado';
+        const dispositivosTexto = dispositivosChecked.length > 0 
+          ? dispositivosChecked.join(', ') 
+          : 'Ninguno seleccionado';
+
+        // Construir el mensaje personalizado de agradecimiento
+        textoConfirmacion.innerHTML = `
+          ¡Muchas gracias, <strong>${nombre}</strong>! Hemos registrado tus respuestas:<br>
+          • <strong>Tema favorito:</strong> ${temaTexto}<br>
+          • <strong>Calificación del portal:</strong> ${calificacion}<br>
+          • <strong>Dispositivos:</strong> ${dispositivosTexto}
+        `;
+
+        // Mostrar el cuadro de confirmación y desplazarse suavemente hacia él
+        mensajeConfirmacion.style.display = 'block';
+        mensajeConfirmacion.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        // Limpiar el formulario después del envío
+        formEncuesta.reset();
+      });
+    });
+  </script>
+
+</body>
+</html>

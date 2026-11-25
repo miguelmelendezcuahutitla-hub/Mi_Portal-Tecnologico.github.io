@@ -1,0 +1,18 @@
+/*Reglas generales para la pagina*/
+body{
+background-color:#f1f5f9;/*Fondo gris claro*/
+font-family:Arial,Helvetica,sans-serif;
+margin:0;
+padding:0;
+color:#1e293b;/*Texto oscuro legible*/
+
+}
+
+/*Alineacion y estilos del encabezado principal*/
+header{
+
+background-color:#0f172a;/*Fondo azul oscuro*/
+color:#ffffff;
+text-align:center;
+padding:20px;
+}
